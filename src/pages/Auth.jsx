@@ -58,24 +58,15 @@ export const Auth = () => {
     }
 
     // Login mode
-    const user = login(email || dealerInfo.email, password);
-    if (user.role === 'owner' || user.role === 'admin') {
-      navigate('/admin');
-    } else {
-      navigate('/stock');
-    }
-  };
-
-  const handleQuickLogin = (roleType) => {
-    if (roleType === 'owner') {
-      const user = login(dealerInfo.email, 'password123');
-      navigate('/admin');
-    } else if (roleType === 'admin') {
-      const user = login('admin.daltonganj@shreekrishnamotors.com', 'password123');
-      navigate('/admin');
-    } else {
-      const user = login('rahul.tiwari@gmail.com', 'password123');
-      navigate('/stock');
+    try {
+      const user = login(email, password);
+      if (user.role === 'owner' || user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/stock');
+      }
+    } catch (err) {
+      setError(err.message || "Failed to sign in. Please check your credentials.");
     }
   };
 
@@ -247,36 +238,14 @@ export const Auth = () => {
             </form>
           )}
 
-          {/* Quick 1-Click Role Logins */}
-          <div className="pt-4 border-t border-white/10 space-y-2.5">
-            <p className="text-[10px] text-center font-black text-neutral-400 uppercase tracking-widest">
-              1-Click Fast Role Sign In
+          {/* Security & Roles Notice */}
+          <div className="pt-4 border-t border-white/10 text-center space-y-1.5">
+            <p className="text-[11px] text-neutral-400 font-medium">
+              Registered users can participate in live auctions and digital bidding.
             </p>
-            <div className="grid grid-cols-3 gap-2 text-xs">
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('owner')}
-                className="p-2.5 rounded-xl bg-neutral-950 hover:bg-neutral-800 border border-[var(--theme-accent-border)] text-[var(--theme-primary)] font-bold transition-all text-center text-[11px] cursor-pointer"
-              >
-                <Crown className="w-3.5 h-3.5 mx-auto mb-1 text-[var(--theme-primary)]" />
-                <span>Owner</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('admin')}
-                className="p-2.5 rounded-xl bg-neutral-950 hover:bg-neutral-800 border border-blue-500/40 text-blue-300 font-bold transition-all text-center text-[11px] cursor-pointer"
-              >
-                <ShieldAlert className="w-3.5 h-3.5 mx-auto mb-1 text-blue-400" />
-                <span>Admin</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickLogin('customer')}
-                className="p-2.5 rounded-xl bg-neutral-950 hover:bg-neutral-800 border border-neutral-700 text-neutral-300 font-semibold transition-all text-center text-[11px] cursor-pointer"
-              >
-                <User className="w-3.5 h-3.5 mx-auto mb-1 text-neutral-400" />
-                <span>Visitor / Bidder</span>
-              </button>
+            <div className="flex items-center justify-center gap-1.5 text-[10px] text-[var(--theme-primary)] font-bold">
+              <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+              <span>Administrative roles are assigned exclusively by the Dealership Owner</span>
             </div>
           </div>
 

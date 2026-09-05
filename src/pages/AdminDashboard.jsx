@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '../components/Logo';
 import { DeviceImagePicker } from '../components/DeviceImagePicker';
 import { 
@@ -37,10 +37,12 @@ import {
   Server,
   HardDrive,
   Key,
-  ShieldCheck
+  ShieldCheck,
+  LogOut
 } from 'lucide-react';
 
 export const AdminDashboard = () => {
+  const navigate = useNavigate();
   const { 
     cars, 
     bids, 
@@ -56,13 +58,13 @@ export const AdminDashboard = () => {
     updateUserRole,
     updateSellRequestStatus, 
     convertSellRequestToCar,
-    switchRole,
     formatCurrency, 
     formatKM,
     isSupabaseConfigured,
     testSupabaseConnection,
     addUser,
-    deleteUser
+    deleteUser,
+    logout
   } = useData();
 
   const [activeTab, setActiveTab] = useState('cars'); // 'cars', 'bids', 'requests', 'users', 'history', 'database'
@@ -180,21 +182,21 @@ export const AdminDashboard = () => {
         </div>
         <h2 className="text-2xl font-bold text-white">Dealership Portal Restricted</h2>
         <p className="text-sm text-neutral-400">
-          You are currently signed in as a Visitor. Switch role to Owner or Admin to access the Shri Krishna Motors Management Dashboard.
+          This portal is reserved strictly for the Dealership Owner (Managing Director Abhishek Verma) and authorized staff administrators.
         </p>
         <div className="flex items-center justify-center gap-3 pt-2">
-          <button
-            onClick={() => switchRole('owner')}
-            className="px-6 py-3 rounded-xl btn-luxury text-neutral-950 font-bold text-xs shadow-lg transition-all cursor-pointer"
+          <Link
+            to="/login"
+            className="px-6 py-3 rounded-xl btn-luxury text-neutral-950 font-bold text-xs shadow-lg transition-all"
           >
-            Switch to Owner Mode
-          </button>
-          <button
-            onClick={() => switchRole('admin')}
-            className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg transition-all cursor-pointer"
+            Sign In with Authorized Account
+          </Link>
+          <Link
+            to="/stock"
+            className="px-6 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-700 font-bold text-xs shadow-lg transition-all"
           >
-            Switch to Admin Mode
-          </button>
+            Browse Vehicle Stock
+          </Link>
         </div>
       </div>
     );
@@ -397,10 +399,23 @@ export const AdminDashboard = () => {
 
           <button
             onClick={handleOpenAddModal}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl btn-luxury text-xs shadow-lg"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl btn-luxury text-xs shadow-lg cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Add New Car</span>
+          </button>
+
+          {/* Log Out Button */}
+          <button
+            onClick={() => {
+              logout();
+              navigate('/login');
+            }}
+            className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-neutral-900 hover:bg-red-950/40 text-neutral-300 hover:text-red-400 border border-neutral-700/80 hover:border-red-500/40 text-xs font-bold transition-all shadow-sm cursor-pointer"
+            title="Sign out of dealership portal"
+          >
+            <LogOut className="w-4 h-4 text-red-400" />
+            <span>Log Out</span>
           </button>
         </div>
       </div>
@@ -744,8 +759,12 @@ export const AdminDashboard = () => {
               <div>
                 <h3 className="font-extrabold text-white text-base">Users & Access Control Directory</h3>
                 <p className="text-xs text-neutral-400">
-                  Manage registered users and assign permissions: <strong>Owner</strong>, <strong>Admin</strong>, or <strong>Visitor</strong>.
+                  Manage registered users and verified bidding participants.
                 </p>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold bg-[var(--theme-accent-bg)] text-[var(--theme-primary)] border border-[var(--theme-accent-border)] mt-2">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Role Governance: Only the Dealership Owner can assign or modify roles</span>
+                </div>
               </div>
 
               <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -823,45 +842,45 @@ export const AdminDashboard = () => {
                         </span>
                       </td>
 
-                      {/* Role Switching & Delete Actions */}
+                      {/* Role Switching & Delete Actions (Only Owner can define roles) */}
                       <td className="p-4 text-right">
-                        <div className="flex items-center justify-end gap-1.5">
-                          <button
-                            onClick={() => updateUserRole(u.id, 'owner')}
-                            className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
-                              u.role === 'owner'
-                                ? 'btn-luxury text-neutral-950 shadow-sm'
-                                : 'bg-neutral-950 text-neutral-400 hover:text-[var(--theme-primary)] border border-neutral-800'
-                            }`}
-                            title="Set as Owner"
-                          >
-                            Owner
-                          </button>
-                          <button
-                            onClick={() => updateUserRole(u.id, 'admin')}
-                            className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
-                              u.role === 'admin'
-                                ? 'bg-blue-500 text-white shadow-sm'
-                                : 'bg-neutral-950 text-neutral-400 hover:text-blue-400 border border-neutral-800'
-                            }`}
-                            title="Set as Admin"
-                          >
-                            Admin
-                          </button>
-                          <button
-                            onClick={() => updateUserRole(u.id, 'visitor')}
-                            className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
-                              u.role === 'visitor'
-                                ? 'bg-neutral-700 text-white shadow-sm'
-                                : 'bg-neutral-950 text-neutral-400 hover:text-white border border-neutral-800'
-                            }`}
-                            title="Set as Visitor"
-                          >
-                            Visitor
-                          </button>
+                        {currentUser?.role === 'owner' ? (
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              onClick={() => updateUserRole(u.id, 'owner')}
+                              className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
+                                u.role === 'owner'
+                                  ? 'btn-luxury text-neutral-950 shadow-sm'
+                                  : 'bg-neutral-950 text-neutral-400 hover:text-[var(--theme-primary)] border border-neutral-800'
+                              }`}
+                              title="Set as Owner"
+                            >
+                              Owner
+                            </button>
+                            <button
+                              onClick={() => updateUserRole(u.id, 'admin')}
+                              className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
+                                u.role === 'admin'
+                                  ? 'bg-blue-500 text-white shadow-sm'
+                                  : 'bg-neutral-950 text-neutral-400 hover:text-blue-400 border border-neutral-800'
+                              }`}
+                              title="Set as Admin"
+                            >
+                              Admin
+                            </button>
+                            <button
+                              onClick={() => updateUserRole(u.id, 'visitor')}
+                              className={`px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer ${
+                                u.role === 'visitor'
+                                  ? 'bg-neutral-700 text-white shadow-sm'
+                                  : 'bg-neutral-950 text-neutral-400 hover:text-white border border-neutral-800'
+                              }`}
+                              title="Set as Visitor"
+                            >
+                              Visitor
+                            </button>
 
-                          {/* Delete User/Admin Button (Only for Owner) */}
-                          {currentUser?.role === 'owner' && (
+                            {/* Delete User/Admin Button */}
                             <button
                               onClick={() => {
                                 if (u.id === 'user-owner' || u.email === 'shreekrishnamotors19@gmail.com') {
@@ -872,18 +891,21 @@ export const AdminDashboard = () => {
                                   deleteUser(u.id);
                                 }
                               }}
-                              disabled={u.id === 'user-owner' || u.email === 'shreekrishnamotors19@gmail.com'}
                               className={`p-1.5 rounded-lg border transition-all cursor-pointer ml-1 ${
                                 u.id === 'user-owner' || u.email === 'shreekrishnamotors19@gmail.com'
                                   ? 'opacity-20 bg-neutral-900 border-neutral-800 text-neutral-600 cursor-not-allowed'
                                   : 'bg-red-950/40 hover:bg-red-900/60 text-red-400 hover:text-red-300 border-red-500/30'
                               }`}
-                              title={u.id === 'user-owner' || u.email === 'shreekrishnamotors19@gmail.com' ? "Primary owner cannot be removed" : `Delete ${u.role === 'admin' ? 'Admin' : 'User'}`}
+                              title="Delete user"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
-                          )}
-                        </div>
+                          </div>
+                        ) : (
+                          <span className="text-[11px] text-neutral-500 italic pr-2 font-medium">
+                            Owner Controlled
+                          </span>
+                        )}
                       </td>
 
                     </tr>

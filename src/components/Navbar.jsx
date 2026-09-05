@@ -180,73 +180,88 @@ export const Navbar = () => {
               <span className="hidden xl:inline">WhatsApp</span>
             </a>
 
-            {/* Role Switcher Pill with Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => {
-                  setRoleDropdownOpen(!roleDropdownOpen);
-                  setThemeDropdownOpen(false);
-                }}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all ${currentRoleBadge.color}`}
-                title="Switch active user view"
-              >
-                <RoleIcon className="w-3.5 h-3.5" />
-                <span>{currentRoleBadge.label}</span>
-                <ChevronDown className="w-3 h-3 opacity-60" />
-              </button>
+            {/* Authenticated User Menu & Log Out Option */}
+            {currentUser ? (
+              <div className="flex items-center gap-2">
+                {/* User Profile Pill & Dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => {
+                      setRoleDropdownOpen(!roleDropdownOpen);
+                      setThemeDropdownOpen(false);
+                    }}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all cursor-pointer ${currentRoleBadge.color}`}
+                    title={currentUser.email}
+                  >
+                    <RoleIcon className="w-3.5 h-3.5" />
+                    <span className="max-w-[120px] truncate">{currentUser.full_name?.split(' ')[0] || currentRoleBadge.label}</span>
+                    <span className="opacity-70 text-[10px] hidden xl:inline">({currentRoleBadge.label})</span>
+                    <ChevronDown className="w-3 h-3 opacity-60" />
+                  </button>
 
-              {roleDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-neutral-950/95 border border-white/15 shadow-2xl p-2 z-50 animate-fade-in space-y-1 backdrop-blur-xl">
-                  <p className="px-3 py-1 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
-                    Switch Active Role
-                  </p>
-                  <button
-                    onClick={() => { switchRole('owner'); setRoleDropdownOpen(false); }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-left transition-colors ${
-                      currentUser?.role === 'owner' ? 'bg-[var(--theme-accent-bg)] text-[var(--theme-primary)]' : 'text-neutral-300 hover:bg-neutral-800'
-                    }`}
-                  >
-                    <Crown className="w-3.5 h-3.5 text-[var(--theme-primary)]" />
-                    <span>Owner / Director</span>
-                  </button>
-                  <button
-                    onClick={() => { switchRole('admin'); setRoleDropdownOpen(false); }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-left transition-colors ${
-                      currentUser?.role === 'admin' ? 'bg-blue-500/20 text-blue-300' : 'text-neutral-300 hover:bg-neutral-800'
-                    }`}
-                  >
-                    <ShieldAlert className="w-3.5 h-3.5 text-blue-400" />
-                    <span>Dealership Admin</span>
-                  </button>
-                  <button
-                    onClick={() => { switchRole('visitor'); setRoleDropdownOpen(false); }}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-left transition-colors ${
-                      currentUser?.role === 'visitor' ? 'bg-neutral-800 text-white' : 'text-neutral-300 hover:bg-neutral-800'
-                    }`}
-                  >
-                    <User className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>Visitor / Buyer</span>
-                  </button>
+                  {roleDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-neutral-950/98 border border-white/15 shadow-2xl p-3 z-50 animate-fade-in space-y-3 backdrop-blur-2xl">
+                      <div className="border-b border-white/10 pb-2.5">
+                        <p className="text-xs font-extrabold text-white truncate">{currentUser.full_name}</p>
+                        <p className="text-[11px] text-neutral-400 font-mono truncate">{currentUser.email}</p>
+                        <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${currentRoleBadge.color}`}>
+                          {currentRoleBadge.label}
+                        </span>
+                      </div>
+
+                      {(currentUser.role === 'owner' || currentUser.role === 'admin') && (
+                        <Link
+                          to="/admin"
+                          onClick={() => setRoleDropdownOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[var(--theme-accent-bg)] hover:bg-[var(--theme-primary)] text-[var(--theme-primary)] hover:text-neutral-950 text-xs font-bold transition-all"
+                        >
+                          <LayoutDashboard className="w-4 h-4" />
+                          <span>Dealership Dashboard</span>
+                        </Link>
+                      )}
+
+                      <button
+                        onClick={() => {
+                          logout();
+                          setRoleDropdownOpen(false);
+                        }}
+                        className="w-full flex items-center gap-2 px-3 py-2 rounded-xl bg-red-950/30 hover:bg-red-900/60 text-red-400 hover:text-red-300 border border-red-500/20 text-xs font-bold transition-all cursor-pointer"
+                      >
+                        <LogOut className="w-3.5 h-3.5" />
+                        <span>Log Out</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
 
-            {/* Portal Action: Owner/Admin Dashboard or Customer Sign In */}
-            {currentUser?.role === 'owner' || currentUser?.role === 'admin' ? (
-              <Link
-                to="/admin"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl btn-luxury text-xs shadow-md"
-              >
-                <LayoutDashboard className="w-4 h-4" />
-                <span>Dashboard</span>
-              </Link>
+                {/* Direct Dashboard Link for Admin/Owner */}
+                {(currentUser.role === 'owner' || currentUser.role === 'admin') && (
+                  <Link
+                    to="/admin"
+                    className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl btn-luxury text-xs font-black shadow-md"
+                  >
+                    <LayoutDashboard className="w-3.5 h-3.5" />
+                    <span>Dashboard</span>
+                  </Link>
+                )}
+
+                {/* Direct Log Out Button */}
+                <button
+                  onClick={() => logout()}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-red-950/40 text-neutral-300 hover:text-red-400 border border-neutral-700/80 hover:border-red-500/40 text-xs font-bold transition-all cursor-pointer"
+                  title="Sign Out"
+                >
+                  <LogOut className="w-3.5 h-3.5 text-red-400" />
+                  <span className="hidden sm:inline">Log Out</span>
+                </button>
+              </div>
             ) : (
               <Link
                 to="/login"
-                className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 border border-white/10 text-neutral-200 text-xs font-semibold transition-all"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl btn-luxury text-neutral-950 text-xs font-black shadow-md transition-all"
               >
-                <User className="w-3.5 h-3.5 text-[var(--theme-primary)]" />
-                <span>{currentUser ? currentUser.full_name : 'Sign In'}</span>
+                <User className="w-3.5 h-3.5" />
+                <span>Sign In</span>
               </Link>
             )}
 
@@ -320,49 +335,40 @@ export const Navbar = () => {
           </div>
 
           <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
-            {currentUser?.role === 'owner' || currentUser?.role === 'admin' ? (
-              <Link
-                to="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl btn-luxury text-sm shadow-md"
-              >
-                <LayoutDashboard className="w-4 h-4" />
-                <span>Admin Dealership Portal</span>
-              </Link>
+            {currentUser ? (
+              <>
+                {(currentUser.role === 'owner' || currentUser.role === 'admin') && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl btn-luxury text-sm shadow-md"
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
+                    <span>Admin Dealership Portal</span>
+                  </Link>
+                )}
+
+                <button
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-red-950/30 hover:bg-red-900/50 border border-red-500/30 text-red-400 font-bold text-sm transition-all cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Log Out ({currentUser.full_name?.split(' ')[0] || 'User'})</span>
+                </button>
+              </>
             ) : (
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-neutral-900 border border-white/10 text-white font-medium text-sm"
+                className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl btn-luxury text-neutral-950 font-bold text-sm shadow-md"
               >
-                <User className="w-4 h-4 text-[var(--theme-primary)]" />
-                <span>{currentUser ? currentUser.full_name : 'Sign In'}</span>
+                <User className="w-4 h-4" />
+                <span>Sign In / Register</span>
               </Link>
             )}
-
-            <div className="flex items-center justify-between px-2 pt-2 text-xs text-neutral-400">
-              <span>View Mode:</span>
-              <div className="flex items-center gap-1.5">
-                <button
-                  onClick={() => switchRole('owner')}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold ${currentUser?.role === 'owner' ? 'btn-luxury text-neutral-950' : 'bg-neutral-900 text-neutral-400'}`}
-                >
-                  Owner
-                </button>
-                <button
-                  onClick={() => switchRole('admin')}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold ${currentUser?.role === 'admin' ? 'bg-blue-500 text-white' : 'bg-neutral-900 text-neutral-400'}`}
-                >
-                  Admin
-                </button>
-                <button
-                  onClick={() => switchRole('visitor')}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold ${currentUser?.role === 'visitor' ? 'bg-neutral-700 text-white' : 'bg-neutral-900 text-neutral-400'}`}
-                >
-                  Visitor
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       )}

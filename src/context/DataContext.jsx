@@ -115,7 +115,11 @@ export const DataProvider = ({ children }) => {
   }, [users]);
 
   useEffect(() => {
-    localStorage.setItem('skm_current_user_v2', JSON.stringify(currentUser));
+    if (currentUser) {
+      localStorage.setItem('skm_current_user_v2', JSON.stringify(currentUser));
+    } else {
+      localStorage.removeItem('skm_current_user_v2');
+    }
   }, [currentUser]);
 
   // --------------------------------------------------------------------------
@@ -374,6 +378,10 @@ export const DataProvider = ({ children }) => {
   // USER & ROLE MANAGEMENT
   // --------------------------------------------------------------------------
   const updateUserRole = (userId, newRole) => {
+    if (currentUser?.role !== 'owner') {
+      showToast("Access Denied", "Only the Dealership Owner (Abhishek Verma) has permission to assign or modify roles.", "error");
+      return;
+    }
     setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u));
     if (currentUser && currentUser.id === userId) {
       setCurrentUser(prev => ({ ...prev, role: newRole }));
@@ -385,7 +393,7 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  const registerUser = ({ full_name, email, phone, password, role = 'visitor' }) => {
+  const registerUser = ({ full_name, email, phone, password }) => {
     const cleanPhone = (phone || '').replace(/\D/g, '');
     if (cleanPhone.length < 10) {
       throw new Error("A valid 10-digit mobile number is mandatory for account registration.");
@@ -397,12 +405,13 @@ export const DataProvider = ({ children }) => {
       throw new Error("A valid email address is required.");
     }
 
+    // Role is strictly 'visitor' for all self-registrations (only owner can promote in dashboard)
     const newUser = {
       id: `user-${Date.now()}`,
       full_name: full_name.trim(),
       email: email.trim().toLowerCase(),
       phone: phone.trim(),
-      role: role,
+      role: 'visitor',
       created_date: new Date().toISOString()
     };
 
@@ -418,6 +427,10 @@ export const DataProvider = ({ children }) => {
   };
 
   const addUser = ({ full_name, email, phone = '', role = 'visitor' }) => {
+    if (currentUser?.role !== 'owner') {
+      showToast("Access Denied", "Only the Dealership Owner (Abhishek Verma) can add users or assign roles.", "error");
+      throw new Error("Only the Dealership Owner can add users or assign roles.");
+    }
     const cleanEmail = email?.trim().toLowerCase();
     if (!cleanEmail || !cleanEmail.includes('@')) {
       showToast("Validation Error", "A valid email ID is required.", "error");
@@ -455,6 +468,10 @@ export const DataProvider = ({ children }) => {
   };
 
   const deleteUser = (userId) => {
+    if (currentUser?.role !== 'owner') {
+      showToast("Access Denied", "Only the Dealership Owner can remove user accounts.", "error");
+      return;
+    }
     const targetUser = users.find(u => u.id === userId);
     if (!targetUser) return;
 
@@ -543,7 +560,13 @@ export const DataProvider = ({ children }) => {
   // --------------------------------------------------------------------------
   const login = (email, password) => {
     const cleanEmail = email?.toLowerCase().trim();
-    if (cleanEmail === dealerInfo.email.toLowerCase() || cleanEmail === 'owner@shreekrishnamotors.com' || cleanEmail.includes('owner')) {
+    if (!cleanEmail) {
+      showToast("Sign In Error", "Please provide a valid email ID.", "error");
+      throw new Error("Please provide a valid email ID.");
+    }
+
+    // 1. Check if Dealership Owner
+    if (cleanEmail === dealerInfo.email.toLowerCase() || cleanEmail === 'owner@shreekrishnamotors.com' || cleanEmail === 'abhishek.verma@shreekrishnamotors.com') {
       const ownerUser = {
         id: "user-owner",
         full_name: "Abhishek Verma (Managing Director)",
@@ -554,35 +577,38 @@ export const DataProvider = ({ children }) => {
       setCurrentUser(ownerUser);
       showToast("Welcome Owner", "Logged in with full Managing Director privileges.", "success");
       return ownerUser;
-    } else if (cleanEmail.includes('admin')) {
-      const adminUser = {
-        id: "user-admin-1",
-        full_name: "Rajesh Kumar (Dealership Admin)",
-        email: cleanEmail,
-        role: "admin",
-        phone: dealerInfo.phone2
-      };
-      setCurrentUser(adminUser);
-      showToast("Welcome Admin", "Logged in to Shri Krishna Motors portal.", "success");
-      return adminUser;
-    } else {
-      const existing = users.find(u => u.email.toLowerCase() === cleanEmail || u.phone?.replace(/\D/g, '') === cleanEmail.replace(/\D/g, ''));
-      const visitorUser = existing || {
-        id: `user-${Date.now()}`,
-        full_name: cleanEmail.split('@')[0],
-        email: cleanEmail,
-        role: "visitor",
-        phone: "+91 98000 00000"
-      };
-      setCurrentUser(visitorUser);
-      showToast("Welcome!", `Signed in as ${visitorUser.full_name}`, "success");
-      return visitorUser;
     }
+
+    // 2. Lookup user in directory whose role was designated by Owner
+    const existing = users.find(u => 
+      u.email?.toLowerCase() === cleanEmail || 
+      (u.phone && cleanEmail && u.phone.replace(/\D/g, '') === cleanEmail.replace(/\D/g, ''))
+    );
+
+    if (existing) {
+      setCurrentUser(existing);
+      const roleTitle = existing.role === 'owner' ? 'Owner' : existing.role === 'admin' ? 'Dealership Admin' : 'Verified Bidder';
+      showToast("Welcome Back!", `Signed in as ${existing.full_name} (${roleTitle}).`, "success");
+      return existing;
+    }
+
+    // 3. New / unrecognized logins default strictly to 'visitor' (only owner can promote)
+    const visitorUser = {
+      id: `user-${Date.now()}`,
+      full_name: cleanEmail.split('@')[0],
+      email: cleanEmail,
+      role: "visitor",
+      phone: ""
+    };
+    setCurrentUser(visitorUser);
+    showToast("Welcome!", `Signed in as ${visitorUser.full_name}`, "success");
+    return visitorUser;
   };
 
   const logout = () => {
     setCurrentUser(null);
-    showToast("Logged Out", "You have been signed out.", "info");
+    localStorage.removeItem('skm_current_user_v2');
+    showToast("Logged Out", "You have signed out successfully.", "info");
   };
 
   const switchRole = (role) => {
