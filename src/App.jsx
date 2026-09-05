@@ -5,6 +5,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Toast } from './components/Toast';
 import { FloatingActions } from './components/FloatingActions';
+import { LuxuryBackground } from './components/LuxuryBackground';
 
 // Pages
 import { Home } from './pages/Home';
@@ -30,7 +31,8 @@ function ScrollToTop() {
 export function App() {
   return (
     <DataProvider>
-      <div className="flex flex-col min-h-screen bg-neutral-950 text-neutral-100 selection:bg-[var(--theme-primary)] selection:text-neutral-950">
+      <div className="relative flex flex-col min-h-screen text-neutral-100 selection:bg-[var(--theme-primary)] selection:text-neutral-950">
+        <LuxuryBackground />
         <ScrollToTop />
         <Navbar />
         

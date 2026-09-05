@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 import { Link } from 'react-router-dom';
 import { Logo } from '../components/Logo';
+import { DeviceImagePicker } from '../components/DeviceImagePicker';
 import { 
   LayoutDashboard, 
   Car, 
@@ -1349,62 +1350,19 @@ export const AdminDashboard = () => {
                 </div>
               </div>
 
-              {/* IMAGE MANAGER SECTION: ENFORCES MIN 3, MAX 10 */}
-              <div className="p-5 rounded-3xl bg-neutral-950/90 border border-white/10 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <ImageIcon className="w-4 h-4 text-[var(--theme-primary)]" />
-                    <span className="text-xs font-bold text-white">Car Image Gallery</span>
-                  </div>
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                    carFormData.photos.length >= 3 && carFormData.photos.length <= 10
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                      : 'bg-red-500/20 text-red-400 border border-red-500/30'
-                  }`}>
-                    {carFormData.photos.length} / 10 Images (Min 3 required)
-                  </span>
-                </div>
-
-                {/* Thumbnail Preview Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                  {carFormData.photos.map((photo, index) => (
-                    <div key={index} className="relative group rounded-2xl overflow-hidden aspect-[4/3] bg-neutral-900 border border-neutral-800">
-                      <img src={photo} alt="" className="w-full h-full object-cover" />
-                      <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-md bg-neutral-950/80 text-[10px] font-bold text-white">
-                        #{index + 1}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => handleRemovePhoto(index)}
-                        className="absolute top-1.5 right-1.5 p-1 rounded-md bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                        title="Remove this photo"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Add Photo Input */}
-                {carFormData.photos.length < 10 && (
-                  <div className="flex gap-2 pt-2">
-                    <input
-                      type="text"
-                      value={carFormData.newPhotoInput}
-                      onChange={(e) => setCarFormData({ ...carFormData, newPhotoInput: e.target.value })}
-                      placeholder="Enter photo path or URL (e.g. /images/cars/... or https://...)"
-                      className="flex-1 px-3.5 py-2 rounded-xl bg-neutral-900 border border-neutral-700 text-white text-xs outline-none focus:border-[var(--theme-primary)]"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleAddPhoto}
-                      className="px-4 py-2 rounded-xl btn-luxury text-xs shrink-0"
-                    >
-                      Add Photo
-                    </button>
-                  </div>
-                )}
-              </div>
+              {/* IMAGE MANAGER WITH DEVICE FILE PICKER (MIN 3, MAX 10) */}
+              <DeviceImagePicker
+                photos={carFormData.photos}
+                onChange={(newPhotos) => {
+                  setCarFormData(prev => ({ ...prev, photos: newPhotos }));
+                  setCarFormError('');
+                }}
+                minPhotos={3}
+                maxPhotos={10}
+                label="Car Image Gallery & Device Upload"
+                description="Select images directly from your computer or phone gallery, or drag & drop. High-resolution camera photos are automatically optimized."
+                theme="dark"
+              />
 
               {/* Status & Auction Toggles */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

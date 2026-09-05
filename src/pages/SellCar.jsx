@@ -15,6 +15,7 @@ import {
   Clock,
   Check
 } from 'lucide-react';
+import { DeviceImagePicker } from '../components/DeviceImagePicker';
 
 export const SellCar = () => {
   const { submitSellRequest, dealerInfo, currentUser, formatCurrency } = useData();
@@ -27,6 +28,7 @@ export const SellCar = () => {
     range_driven: '',
     ownership: '1st Owner',
     expected_price: '',
+    photos: [],
     photo_url: '',
     notes: '',
     seller_name: currentUser?.full_name || '',
@@ -46,9 +48,11 @@ export const SellCar = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    const photos = formData.photo_url.trim() ? [formData.photo_url.trim()] : [
-      "/images/cars/tata-nexon/nexon-1.jpg"
-    ];
+    const photos = formData.photos && formData.photos.length > 0 
+      ? formData.photos 
+      : (formData.photo_url.trim() ? [formData.photo_url.trim()] : [
+          "/images/cars/tata-nexon/nexon-1.jpg"
+        ]);
 
     submitSellRequest({
       ...formData,
@@ -232,32 +236,29 @@ export const SellCar = () => {
               <span>2. Expected Valuation & Photos</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1.5">Expected Price (₹) *</label>
-                <input
-                  type="number"
-                  name="expected_price"
-                  value={formData.expected_price}
-                  onChange={handleChange}
-                  placeholder="e.g. 750000"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-[var(--theme-primary)] focus:ring-2 focus:ring-[var(--theme-primary)]/20 outline-none shadow-xs font-medium"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-800 mb-1.5">Photo Link (Optional Image URL)</label>
-                <input
-                  type="url"
-                  name="photo_url"
-                  value={formData.photo_url}
-                  onChange={handleChange}
-                  placeholder="https://... (or share photos via WhatsApp)"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-[var(--theme-primary)] focus:ring-2 focus:ring-[var(--theme-primary)]/20 outline-none shadow-xs font-medium"
-                />
-              </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-800 mb-1.5">Expected Price (₹) *</label>
+              <input
+                type="number"
+                name="expected_price"
+                value={formData.expected_price}
+                onChange={handleChange}
+                placeholder="e.g. 750000"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:border-[var(--theme-primary)] focus:ring-2 focus:ring-[var(--theme-primary)]/20 outline-none shadow-xs font-medium"
+                required
+              />
             </div>
+
+            {/* Device Image Picker */}
+            <DeviceImagePicker
+              photos={formData.photos}
+              onChange={(newPhotos) => setFormData(prev => ({ ...prev, photos: newPhotos }))}
+              minPhotos={1}
+              maxPhotos={6}
+              label="Car Photos (Upload from Device)"
+              description="Upload exterior (front, side, rear) and interior photos from your phone or computer. Images are optimized automatically."
+              theme="light"
+            />
 
             <div>
               <label className="block text-xs font-bold text-slate-800 mb-1.5">Additional Vehicle Notes / Condition Details</label>

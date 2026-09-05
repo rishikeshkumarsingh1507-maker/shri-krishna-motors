@@ -74,6 +74,16 @@ export const CarCard = ({ car }) => {
                   : 'opacity-0 scale-102 pointer-events-none'
               }`}
               loading="lazy"
+              onError={(e) => {
+                const currentSrc = e.currentTarget.src;
+                if (currentSrc.includes('mahindra-scorpio-n')) {
+                  e.currentTarget.src = currentSrc.replace('mahindra-scorpio-n', 'mahindra-scorpio');
+                } else if (currentSrc.includes('mahindra-scorpio')) {
+                  e.currentTarget.src = currentSrc.replace('mahindra-scorpio', 'mahindra-scorpio-n');
+                } else {
+                  e.currentTarget.src = '/images/hero/fortuner-hero.jpg';
+                }
+              }}
             />
           ))}
 

@@ -22,6 +22,7 @@ import {
   Shield,
   Zap
 } from 'lucide-react';
+import { DeviceImagePicker } from '../components/DeviceImagePicker';
 
 export const Home = () => {
   const { dealerInfo, cars, submitSellRequest, formatCurrency } = useData();
@@ -39,6 +40,7 @@ export const Home = () => {
     expected_price: '',
     seller_name: '',
     seller_phone: '',
+    photos: [],
     notes: ''
   });
   const [sellSubmitted, setSellSubmitted] = useState(false);
@@ -54,9 +56,13 @@ export const Home = () => {
   const handleSellSubmit = (e) => {
     e.preventDefault();
     setSellSubmitting(true);
+    const photos = sellForm.photos && sellForm.photos.length > 0
+      ? sellForm.photos
+      : ["/images/cars/tata-nexon/nexon-1.jpg"];
+
     submitSellRequest({
       ...sellForm,
-      photos: ["/images/cars/tata-nexon/nexon-1.jpg"]
+      photos
     });
     setSellSubmitting(false);
     setSellSubmitted(true);
@@ -434,6 +440,17 @@ export const Home = () => {
                   />
                 </div>
               </div>
+
+              {/* Optional Device Photo Upload */}
+              <DeviceImagePicker
+                photos={sellForm.photos}
+                onChange={(newPhotos) => setSellForm(prev => ({ ...prev, photos: newPhotos }))}
+                minPhotos={0}
+                maxPhotos={6}
+                label="Attach Car Photos from Device (Optional)"
+                description="Upload photos of your car from your phone or computer for a faster, higher spot valuation offer."
+                theme="light"
+              />
 
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
                 <div className="flex items-center gap-4 text-xs text-slate-700">

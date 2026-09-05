@@ -126,6 +126,16 @@ export const CarDetail = () => {
               src={photos[selectedPhotoIdx]}
               alt={car.title}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                const currentSrc = e.currentTarget.src;
+                if (currentSrc.includes('mahindra-scorpio-n')) {
+                  e.currentTarget.src = currentSrc.replace('mahindra-scorpio-n', 'mahindra-scorpio');
+                } else if (currentSrc.includes('mahindra-scorpio')) {
+                  e.currentTarget.src = currentSrc.replace('mahindra-scorpio', 'mahindra-scorpio-n');
+                } else {
+                  e.currentTarget.src = '/images/hero/fortuner-hero.jpg';
+                }
+              }}
             />
             
             {/* Overlay Badges */}
@@ -159,7 +169,21 @@ export const CarDetail = () => {
                       : 'border-transparent opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  <img 
+                    src={img} 
+                    alt="" 
+                    className="w-full h-full object-cover" 
+                    onError={(e) => {
+                      const currentSrc = e.currentTarget.src;
+                      if (currentSrc.includes('mahindra-scorpio-n')) {
+                        e.currentTarget.src = currentSrc.replace('mahindra-scorpio-n', 'mahindra-scorpio');
+                      } else if (currentSrc.includes('mahindra-scorpio')) {
+                        e.currentTarget.src = currentSrc.replace('mahindra-scorpio', 'mahindra-scorpio-n');
+                      } else {
+                        e.currentTarget.src = '/images/hero/fortuner-hero.jpg';
+                      }
+                    }}
+                  />
                 </button>
               ))}
             </div>

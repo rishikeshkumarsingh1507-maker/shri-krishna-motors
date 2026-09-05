@@ -255,4 +255,38 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+/* Subtle showroom ambient drift animations */
+@keyframes ambient-drift-1 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(60px, 40px, 0) scale(1.12);
+    opacity: 0.48;
+  }
+}
+
+@keyframes ambient-drift-2 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.30;
+  }
+  50% {
+    transform: translate3d(-50px, -35px, 0) scale(1.08);
+    opacity: 0.45;
+  }
+}
+
+.animate-ambient-drift-1 {
+  animation: ambient-drift-1 18s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.animate-ambient-drift-2 {
+  animation: ambient-drift-2 22s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+
 
