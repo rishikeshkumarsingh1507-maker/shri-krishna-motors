@@ -38,9 +38,9 @@ export const DataProvider = ({ children }) => {
     }
   }, [theme]);
 
-  // Cars state (retains the 2 cars provided in doc)
+  // Cars state (retains Tata Nexon, Maruti Swift, Mahindra Scorpio-N, Hyundai Creta)
   const [cars, setCars] = useState(() => {
-    const saved = localStorage.getItem('skm_cars_v3');
+    const saved = localStorage.getItem('skm_cars_v4');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -52,9 +52,9 @@ export const DataProvider = ({ children }) => {
     return initialCars;
   });
 
-  // Bids state (bids for the 2 cars)
+  // Bids state
   const [bids, setBids] = useState(() => {
-    const saved = localStorage.getItem('skm_bids_v3');
+    const saved = localStorage.getItem('skm_bids_v4');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -99,11 +99,11 @@ export const DataProvider = ({ children }) => {
 
   // Sync to localStorage as offline cache
   useEffect(() => {
-    localStorage.setItem('skm_cars_v3', JSON.stringify(cars));
+    localStorage.setItem('skm_cars_v4', JSON.stringify(cars));
   }, [cars]);
 
   useEffect(() => {
-    localStorage.setItem('skm_bids_v3', JSON.stringify(bids));
+    localStorage.setItem('skm_bids_v4', JSON.stringify(bids));
   }, [bids]);
 
   useEffect(() => {

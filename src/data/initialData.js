@@ -74,6 +74,62 @@ export const initialCars = [
     insurance_validity: "Oct 2026",
     rc_status: "Verified (JH-03)",
     created_date: "2026-08-29T12:30:00Z"
+  },
+  {
+    id: "car-scorpio-n",
+    title: "Mahindra Scorpio-N Z8L Diesel 4x4",
+    brand: "Mahindra",
+    model: "Scorpio-N Z8L",
+    model_year: 2023,
+    fuel: "Diesel",
+    transmission: "Automatic",
+    range_driven: 18200,
+    ownership: "1st Owner",
+    accidental: "Non-Accidental Certified",
+    mileage: "16.2 km/l",
+    price: 2150000,
+    starting_bid: 1950000,
+    current_bid: 2025000,
+    bid_enabled: true,
+    status: "Available",
+    photos: [
+      "/images/cars/mahindra-scorpio-n/scorpio-1.jpg",
+      "/images/cars/mahindra-scorpio-n/scorpio-2.jpg",
+      "/images/cars/mahindra-scorpio-n/scorpio-3.jpg"
+    ],
+    video: "",
+    description: "Flagship Mahindra Scorpio-N Z8L 4x4 Automatic in deep metallic Napoli Black. Powered by the potent 2.2L mHawk diesel engine generating 175 PS & 400 Nm torque. Features Sony 12-speaker 3D immersive audio, electric sunroof, dual-zone climate control, rich coffee-black leatherette upholstery, wireless smartphone charger, and intelligent 4XPLOR terrain modes (Mud, Sand, Snow, Normal). Fully verified non-accidental with active manufacturer warranty.",
+    insurance_validity: "Jan 2027",
+    rc_status: "Verified & Transferable (JH-03)",
+    created_date: "2026-09-01T09:00:00Z"
+  },
+  {
+    id: "car-creta",
+    title: "Hyundai Creta SX (O) Diesel AT",
+    brand: "Hyundai",
+    model: "Creta SX (O)",
+    model_year: 2023,
+    fuel: "Diesel",
+    transmission: "Automatic",
+    range_driven: 22400,
+    ownership: "1st Owner",
+    accidental: "Non-Accidental Certified",
+    mileage: "18.5 km/l",
+    price: 1580000,
+    starting_bid: 1420000,
+    current_bid: 1490000,
+    bid_enabled: true,
+    status: "Available",
+    photos: [
+      "/images/cars/hyundai-creta/creta-1.jpg",
+      "/images/cars/hyundai-creta/creta-2.jpg",
+      "/images/cars/hyundai-creta/creta-3.jpg"
+    ],
+    video: "",
+    description: "Top-of-the-line Hyundai Creta SX (O) Diesel Automatic in pristine Titan Grey metallic. Equipped with voice-controlled panoramic sunroof, ventilated front seats, 10.25-inch touchscreen infotainment with premium Bose 8-speaker sound system, digital instrument cluster, 6 airbags, wireless Android Auto & Apple CarPlay, and electronic parking brake with auto-hold. Non-accidental certified with zero claims.",
+    insurance_validity: "Dec 2026",
+    rc_status: "Verified & Transferable (JH-03)",
+    created_date: "2026-09-02T11:00:00Z"
   }
 ];
 
@@ -110,6 +166,28 @@ export const initialBids = [
     amount: 500000,
     status: "Active Top Bid",
     created_date: "2026-09-03T16:10:00Z"
+  },
+  {
+    id: "bid-104",
+    car_id: "car-scorpio-n",
+    car_title: "Mahindra Scorpio-N Z8L Diesel 4x4",
+    bidder_name: "Vikramaditya Sahay",
+    bidder_phone: "+91 94311 88990",
+    bidder_email: "vikram.sahay@gmail.com",
+    amount: 2025000,
+    status: "Active Top Bid",
+    created_date: "2026-09-04T11:00:00Z"
+  },
+  {
+    id: "bid-105",
+    car_id: "car-creta",
+    car_title: "Hyundai Creta SX (O) Diesel AT",
+    bidder_name: "Alok Ranjan Singh",
+    bidder_phone: "+91 93344 11223",
+    bidder_email: "alok.singh@gmail.com",
+    amount: 1490000,
+    status: "Active Top Bid",
+    created_date: "2026-09-04T15:30:00Z"
   }
 ];
 
