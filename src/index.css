@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root, [data-theme="gold"] {
+    --theme-name: 'gold';
+    --theme-primary: #eab308;
+    --theme-primary-hover: #ca8a04;
+    --theme-primary-light: #fef08a;
+    --theme-primary-glow: rgba(234, 179, 8, 0.25);
+    --theme-accent-bg: rgba(234, 179, 8, 0.09);
+    --theme-accent-border: rgba(234, 179, 8, 0.38);
+    --theme-gradient: linear-gradient(135deg, #fef08a 0%, #eab308 45%, #b45309 100%);
+    --theme-text-gradient: linear-gradient(135deg, #ffffff 0%, #fef08a 40%, #eab308 80%, #ca8a04 100%);
+    --theme-badge-bg: rgba(234, 179, 8, 0.16);
+    --theme-badge-text: #fef08a;
+    --theme-bg-radial: radial-gradient(circle at 50% 0%, rgba(234, 179, 8, 0.12) 0%, transparent 60%);
+  }
+
+  /* Theme: Sapphire Platinum / Ice Diamond */
+  [data-theme="platinum"] {
+    --theme-name: 'platinum';
+    --theme-primary: #38bdf8;
+    --theme-primary-hover: #0284c7;
+    --theme-primary-light: #bae6fd;
+    --theme-primary-glow: rgba(56, 189, 248, 0.25);
+    --theme-accent-bg: rgba(56, 189, 248, 0.09);
+    --theme-accent-border: rgba(56, 189, 248, 0.38);
+    --theme-gradient: linear-gradient(135deg, #f0f9ff 0%, #7dd3fc 45%, #0284c7 100%);
+    --theme-text-gradient: linear-gradient(135deg, #ffffff 0%, #bae6fd 40%, #38bdf8 80%, #0284c7 100%);
+    --theme-badge-bg: rgba(56, 189, 248, 0.16);
+    --theme-badge-text: #bae6fd;
+    --theme-bg-radial: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.12) 0%, transparent 60%);
+  }
+
+  /* Theme: Emerald Royale / British Racing Green */
+  [data-theme="emerald"] {
+    --theme-name: 'emerald';
+    --theme-primary: #10b981;
+    --theme-primary-hover: #059669;
+    --theme-primary-light: #a7f3d0;
+    --theme-primary-glow: rgba(16, 185, 129, 0.25);
+    --theme-accent-bg: rgba(16, 185, 129, 0.09);
+    --theme-accent-border: rgba(16, 185, 129, 0.38);
+    --theme-gradient: linear-gradient(135deg, #ecfdf5 0%, #34d399 45%, #059669 100%);
+    --theme-text-gradient: linear-gradient(135deg, #ffffff 0%, #a7f3d0 40%, #10b981 80%, #047857 100%);
+    --theme-badge-bg: rgba(16, 185, 129, 0.16);
+    --theme-badge-text: #a7f3d0;
+    --theme-bg-radial: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 60%);
+  }
+
+  /* Theme: Velvet Amethyst / Imperial Purple */
+  [data-theme="amethyst"] {
+    --theme-name: 'amethyst';
+    --theme-primary: #c084fc;
+    --theme-primary-hover: #9333ea;
+    --theme-primary-light: #f3e8ff;
+    --theme-primary-glow: rgba(192, 132, 252, 0.25);
+    --theme-accent-bg: rgba(192, 132, 252, 0.09);
+    --theme-accent-border: rgba(192, 132, 252, 0.38);
+    --theme-gradient: linear-gradient(135deg, #faf5ff 0%, #c084fc 45%, #7e22ce 100%);
+    --theme-text-gradient: linear-gradient(135deg, #ffffff 0%, #e9d5ff 40%, #c084fc 80%, #7e22ce 100%);
+    --theme-badge-bg: rgba(192, 132, 252, 0.16);
+    --theme-badge-text: #e9d5ff;
+    --theme-bg-radial: radial-gradient(circle at 50% 0%, rgba(192, 132, 252, 0.12) 0%, transparent 60%);
+  }
+
+  /* Theme: Ruby Rose Gold / Sunset Luxury */
+  [data-theme="ruby"] {
+    --theme-name: 'ruby';
+    --theme-primary: #fb7185;
+    --theme-primary-hover: #e11d48;
+    --theme-primary-light: #ffe4e6;
+    --theme-primary-glow: rgba(251, 113, 133, 0.25);
+    --theme-accent-bg: rgba(251, 113, 133, 0.09);
+    --theme-accent-border: rgba(251, 113, 133, 0.38);
+    --theme-gradient: linear-gradient(135deg, #fff1f2 0%, #fb7185 45%, #be123c 100%);
+    --theme-text-gradient: linear-gradient(135deg, #ffffff 0%, #fecdd3 40%, #fb7185 80%, #be123c 100%);
+    --theme-badge-bg: rgba(251, 113, 133, 0.16);
+    --theme-badge-text: #fecdd3;
+    --theme-bg-radial: radial-gradient(circle at 50% 0%, rgba(251, 113, 133, 0.12) 0%, transparent 60%);
+  }
+
+  /* Theme: Obsidian Stealth / Carbon Platinum */
+  [data-theme="stealth"] {
+    --theme-name: 'stealth';
+    --theme-primary: #e2e8f0;
+    --theme-primary-hover: #94a3b8;
+    --theme-primary-light: #ffffff;
+    --theme-primary-glow: rgba(226, 232, 240, 0.2);
+    --theme-accent-bg: rgba(255, 255, 255, 0.07);
+    --theme-accent-border: rgba(255, 255, 255, 0.3);
+    --theme-gradient: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #64748b 100%);
+    --theme-text-gradient: linear-gradient(135deg, #ffffff 0%, #f1f5f9 45%, #94a3b8 100%);
+    --theme-badge-bg: rgba(255, 255, 255, 0.12);
+    --theme-badge-text: #f8fafc;
+    --theme-bg-radial: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  }
+
+  body {
+    background-color: #080c16;
+    background-image: 
+      radial-gradient(circle at 50% -5%, var(--theme-primary-glow) 0%, transparent 55%),
+      radial-gradient(circle at 85% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, var(--theme-primary-glow) 0%, transparent 60%);
+    background-attachment: fixed;
+    color: #f8fafc;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Custom luxury scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #080c16;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-primary);
+}
+
+/* DUO-TONE LIGHT & DARK LUXURY CARDS */
+.duo-card-light {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 55%, #f1f5f9 100%);
+  color: #0f172a;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.45), 0 2px 6px -1px rgba(0, 0, 0, 0.08);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.duo-card-light:hover {
+  border-color: var(--theme-accent-border);
+  box-shadow: 0 22px 50px -12px rgba(0, 0, 0, 0.55), 0 0 35px -5px var(--theme-primary-glow);
+  transform: translateY(-3px);
+}
+
+.duo-card-dark {
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.92) 0%, rgba(8, 12, 22, 0.98) 100%);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.duo-card-dark:hover {
+  border-color: var(--theme-accent-border);
+  box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.85), 0 0 30px -5px var(--theme-primary-glow);
+  transform: translateY(-3px);
+}
+
+/* Layered luxury glassmorphism card styling */
+.premium-card {
+  background: linear-gradient(180deg, rgba(16, 22, 36, 0.85) 0%, rgba(10, 14, 24, 0.96) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.12), 0 20px 45px -15px rgba(0, 0, 0, 0.85);
+}
+
+.premium-card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-card-hover:hover {
+  border-color: var(--theme-accent-border);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.2), 0 30px 60px -15px rgba(0, 0, 0, 0.9), 0 0 35px -5px var(--theme-primary-glow);
+  transform: translateY(-3px);
+}
+
+/* Luxury button styling with metallic sheen */
+.btn-luxury {
+  background: var(--theme-gradient);
+  color: #05070c;
+  font-weight: 800;
+  box-shadow: 0 10px 25px -5px var(--theme-primary-glow);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-luxury::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 80%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease-in-out;
+}
+
+.btn-luxury:hover::after {
+  transform: translateX(100%);
+}
+
+.btn-luxury:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1.5px);
+  box-shadow: 0 18px 36px -4px var(--theme-primary-glow);
+}
+
+/* Gradient text utility */
+.text-luxury-gradient {
+  background: var(--theme-text-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Dynamic theme background glow */
+.ambient-glow {
+  background: radial-gradient(circle at 50% 30%, var(--theme-primary-glow) 0%, transparent 65%);
+}
+
+.theme-pill-badge {
+  background: var(--theme-badge-bg);
+  color: var(--theme-badge-text);
+  border: 1px solid var(--theme-accent-border);
+  box-shadow: 0 4px 15px -3px var(--theme-primary-glow);
+}
+
+/* High contrast duo-tone badges */
+.duo-pill-light {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.12);
+}
+
+.duo-pill-dark {
+  background: rgba(15, 23, 42, 0.9);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+

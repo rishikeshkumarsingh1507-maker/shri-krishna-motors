@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 110" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#FDE68A" />
+      <stop offset="30%" stopColor="#F59E0B" />
+      <stop offset="70%" stopColor="#D97706" />
+      <stop offset="100%" stopColor="#78350F" />
+    </linearGradient>
+    <linearGradient id="silverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stopColor="#FFFFFF" />
+      <stop offset="50%" stopColor="#CBD5E1" />
+      <stop offset="100%" stopColor="#64748B" />
+    </linearGradient>
+    <linearGradient id="shieldFill" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stopColor="#1E293B" />
+      <stop offset="100%" stopColor="#070A10" />
+    </linearGradient>
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- LOGO EMBLEM ICON (Left) -->
+  <g transform="translate(10, 5)">
+    <!-- Outer Shield Crest -->
+    <path d="M50 6 L88 20 C88 60 70 85 50 98 C30 85 12 60 12 20 Z" fill="url(#shieldFill)" stroke="url(#goldGrad)" stroke-width="3.5" filter="url(#goldGlow)"/>
+    <!-- Inner Border Line -->
+    <path d="M50 13 L82 25 C82 58 66 79 50 91 C34 79 18 58 18 25 Z" fill="none" stroke="url(#goldGrad)" stroke-width="1.2" stroke-opacity="0.6" stroke-dasharray="3 1.5"/>
+    <!-- Royal Crown/Feather Peak -->
+    <path d="M44 14 C47 9 50 7 50 7 C50 7 53 9 56 14 C53 16 47 16 44 14 Z" fill="url(#goldGrad)"/>
+    <circle cx="50" cy="18" r="2" fill="#FFFBEB"/>
+    <!-- Aerodynamic Luxury Car Silhouette -->
+    <path d="M28 48 C31 41 40 38 50 38 C60 38 69 41 72 48 L77 54 C79 55 79 57 77 59 C72 61 63 62 50 62 C37 62 28 61 23 59 C21 57 21 55 23 54 Z" fill="url(#silverGrad)" fill-opacity="0.35" stroke="url(#goldGrad)" stroke-width="2"/>
+    <path d="M36 47 C40 41 45 40 50 40 C55 40 60 41 64 47" stroke="url(#goldGrad)" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Monogram SKM -->
+    <text x="50" y="77" font-family="'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif" font-size="18" font-weight="900" letter-spacing="1.5" text-anchor="middle" fill="url(#goldGrad)" filter="url(#goldGlow)">SKM</text>
+    <!-- Speed Flares -->
+    <path d="M25 54 L16 47 M75 54 L84 47" stroke="url(#goldGrad)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M27 60 L18 56 M73 60 L82 56" stroke="url(#silverGrad)" stroke-width="1.2" stroke-linecap="round" stroke-opacity="0.8"/>
+  </g>
+
+  <!-- LOGO TEXT LOCKUP (Right) -->
+  <g transform="translate(125, 0)">
+    <!-- Brand Name Primary -->
+    <text x="0" y="46" font-family="'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif" font-size="32" font-weight="900" letter-spacing="-0.5" fill="#FFFFFF">
+      SHRI KRISHNA <tspan fill="url(#goldGrad)">MOTORS</tspan>
+    </text>
+
+    <!-- City & Certification Badge -->
+    <rect x="0" y="60" width="84" height="20" rx="6" fill="#F59E0B" fill-opacity="0.15" stroke="#F59E0B" stroke-width="1" stroke-opacity="0.4"/>
+    <text x="42" y="74" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="800" letter-spacing="1" text-anchor="middle" fill="#FCD34D">DALTONGANJ</text>
+
+    <!-- Tagline -->
+    <text x="96" y="74" font-family="'Inter', system-ui, sans-serif" font-size="12" font-weight="600" letter-spacing="0.5" fill="#94A3B8">
+      USED CAR • BUY • SELL • EXCHANGE
+    </text>
+
+    <!-- Est 2021 -->
+    <text x="315" y="74" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="700" fill="#64748B">
+      EST. 2021
+    </text>
+  </g>
+</svg>
