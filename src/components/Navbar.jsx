@@ -234,26 +234,16 @@ export const Navbar = () => {
                   )}
                 </div>
 
-                {/* Direct Dashboard Link for Admin/Owner */}
+                {/* Dashboard Link for Admin/Owner - shown only on wider screens */}
                 {(currentUser.role === 'owner' || currentUser.role === 'admin') && (
                   <Link
                     to="/admin"
-                    className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl btn-luxury text-xs font-black shadow-md"
+                    className="hidden xl:flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl btn-luxury text-xs font-black shadow-md"
                   >
                     <LayoutDashboard className="w-3.5 h-3.5" />
                     <span>Dashboard</span>
                   </Link>
                 )}
-
-                {/* Direct Log Out Button */}
-                <button
-                  onClick={() => logout()}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-red-950/40 text-neutral-300 hover:text-red-400 border border-neutral-700/80 hover:border-red-500/40 text-xs font-bold transition-all cursor-pointer"
-                  title="Sign Out"
-                >
-                  <LogOut className="w-3.5 h-3.5 text-red-400" />
-                  <span className="hidden sm:inline">Log Out</span>
-                </button>
               </div>
             ) : (
               <Link
