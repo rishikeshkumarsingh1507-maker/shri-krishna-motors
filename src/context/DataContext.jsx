@@ -75,16 +75,10 @@ export const DataProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : initialUsers;
   });
 
-  // Current logged in user (defaults to Owner / Managing Director)
+  // Current logged in user — null means not logged in (visitor)
   const [currentUser, setCurrentUser] = useState(() => {
     const saved = localStorage.getItem('skm_current_user_v2');
-    return saved ? JSON.parse(saved) : {
-      id: "user-owner",
-      full_name: "Abhishek Verma (Owner)",
-      email: "shreekrishnamotors19@gmail.com",
-      role: "owner",
-      phone: "+91 93042 35814"
-    };
+    return saved ? JSON.parse(saved) : null;
   });
 
   // Toast notifications
